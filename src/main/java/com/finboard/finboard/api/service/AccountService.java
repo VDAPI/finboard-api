@@ -10,7 +10,6 @@ import com.finboard.finboard.api.repository.AccountRepository;
 import com.finboard.finboard.api.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +33,6 @@ public class AccountService {
         account.setBalance(request.getBalance());
         account.setCurrency(request.getCurrency());
         account.setUser(user);
-        account.setCreatedAt(LocalDateTime.now());
 
         Account saved = accountRepository.save(account);
 
@@ -60,7 +58,7 @@ public class AccountService {
             dto.setType(account.getType());
             dto.setBalance(account.getBalance());
             dto.setCurrency(account.getCurrency());
-            dto.setCreatedAt(LocalDateTime.now());
+            dto.setCreatedAt(account.getCreatedAt());
             dtos.add(dto);
         }
         return dtos;

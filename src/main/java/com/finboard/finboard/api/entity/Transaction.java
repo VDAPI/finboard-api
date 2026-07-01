@@ -7,33 +7,39 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-
 @Entity
-@Table(name = "accounts")
+@Table(name = "transactions")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Account {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Transaction {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
-    private AccountType type;
+    @Column(nullable = false)
+    private TransactionType type;
 
-    private BigDecimal balance;
+    private String description;
 
-    @Column(length = 3)
-    private String currency;
+    @Column(nullable = false)
+    private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     private LocalDateTime createdAt;
 
